@@ -11,3 +11,9 @@ executables
 geckodriver
 geckodriver.log
 LMNOPsite/geckodriver.log
+
+Added by Boris
+venv/
+*jpg
+*png
+img/
