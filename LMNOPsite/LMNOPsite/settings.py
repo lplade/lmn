@@ -56,7 +56,7 @@ ROOT_URLCONF = 'LMNOPsite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],  # LMNOPsite\lmn\templates
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,11 +125,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-    'LMNOPsite\lmn\static'
-]
 
 # Where to send user after successful login if no other page is provided.
 # Should provide the user object.
