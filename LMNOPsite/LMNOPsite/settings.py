@@ -79,10 +79,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'lmnop',
-        'USER' : 'lmnop',
-        'PASSWORD' : os.environ['POSTGRES_LMNOP_USER_PASSWORD'],
-        'HOST' : 'localhost',
-        'PORT' : '',
+        'USER': 'lmnop',
+        'PASSWORD': os.environ['POSTGRES_LMNOP_USER_PASSWORD'],
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -111,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Chicago'  # Central time
 
 USE_I18N = True
 
