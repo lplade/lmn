@@ -1,0 +1,12 @@
+{% extends 'lmn/base.html' %}
+{% block content %}
+
+<h2>Modify Account Information</h2>
+
+<form method='post' action="">{% csrf_token %}
+  <table id="modification_form">
+    {{ form.as_table }}
+  </table>
+  <button type='submit'>Submit</button>
+</form>
+{% endblock %}
