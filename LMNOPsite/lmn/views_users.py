@@ -27,7 +27,7 @@ def my_user_profile(request):
         form = UserModificationForm(request.POST)
         if form.is_valid():
             # Update user object
-            return redirect('lmn:homepage')
+            return redirect('lmn:user_profile')
         else:
             return render(request, 'lmn/users/modify_user.html',
                           {'form': form})
