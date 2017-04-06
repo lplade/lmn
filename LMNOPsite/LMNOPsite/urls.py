@@ -21,6 +21,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.conf import settings
 from django.conf.urls.static import static
 from lmn import views, views_users
+from django.views.defaults import page_not_found
 
 
 urlpatterns = [
@@ -28,7 +29,9 @@ urlpatterns = [
 
     url(r'^accounts/login/$', auth_views.login, name='login'),
     url(r'^accounts/logout/$', auth_views.logout, name='logout'),
-    url(r'^register/$', views_users.register, name='register'),
+    #url(r'^register/$', views_users.register, name='register'),
+    # This is broken so users cant upload large files until I fix to limit file size
+    url(r'^register/$', page_not_found, name='register'),
 
     url(r'^', include('lmn.urls') ),
 
