@@ -1,4 +1,6 @@
 venv/
+# Jeremy's virtual env
+env/
 *.pyc
 __pycache__
 LMNOPsite/lmn/__pycache__/
