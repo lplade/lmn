@@ -24,7 +24,7 @@ create user lmnop with password 'password_here';
 create a database lmnop
 
 ```
-create database owner lmnop;
+create database lmnop owner lmnop;
 ```
 
 Various postgres shell commands 
