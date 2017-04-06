@@ -1,10 +1,10 @@
-body {
+/*body {
   font-family: monospace;
-}
+}*/
 
 #welcome_user_msg, #login_or_sign_up {
   position: absolute;
-  right: 0px;
+  right: 0;
   padding-right: 10px;
 }
 
