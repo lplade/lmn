@@ -7,6 +7,7 @@ from .forms import VenueSearchForm, NewNoteForm, ArtistSearchForm, \
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import update_session_auth_hash
 
 from django.utils import timezone
 
@@ -26,8 +27,14 @@ def my_user_profile(request):
     if request.method == 'POST':
         form = UserModificationForm(request.POST)
         if form.is_valid():
-            # Update user object
-            return redirect('lmn:user_profile')
+            data = form.cleaned_data
+            user = User.objects.get(pk=request.user.id)
+            user.first_name = data['first_name']
+            user.last_name = data['last_name']
+            user.email = data['email']
+            user.password = data['password1']
+            user.save()
+            return redirect('lmn:homepage')
         else:
             return render(request, 'lmn/users/modify_user.html',
                           {'form': form})
