@@ -28,8 +28,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),    #Admin site
 
     url(r'^accounts/login/$', auth_views.login, name='login'),
-    url(r'^accounts/logout/$', auth_views.logout, name='logout'),
-    #url(r'^register/$', views_users.register, name='register'),
+    url(r'^accounts/logout/$', auth_views.logout, name='logout', kwargs={'template_name': 'users/logout_message.html'}),
+    url(r'^register/$', views_users.register, name='register'),
     # This is broken so users cant upload large files until I fix to limit file size
     url(r'^register/$', page_not_found, name='register'),
 

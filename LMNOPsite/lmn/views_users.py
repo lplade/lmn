@@ -63,3 +63,7 @@ def register(request):
     else:
         form = UserRegistrationForm()
         return render(request, 'registration/register.html', {'form': form})
+
+
+def logout_message(request):
+    return render(request, 'lmn/users/logout_message.html')
