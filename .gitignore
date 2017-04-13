@@ -18,3 +18,7 @@ LMNOPsite/geckodriver.log
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+secrets.py
+eventful_data/secrets.py
+eventful_data/MN_venues_data.json
