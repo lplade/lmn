@@ -75,4 +75,8 @@ class Note(models.Model):
         self.save()
 
     def __str__(self):
-        return 'Note for user ID {} for show ID {} with title {} text {} posted on {} picture {}'.format(self.user, self.show, self.title, self.text, self.posted_date, self.document)
+        return 'Note for user ID {} for show ID {} with ' \
+               'title {} text {} posted on {} picture {}'\
+            .format(self.user, self.show, self.title,
+                    self.text, self.posted_date, self.document)
+
