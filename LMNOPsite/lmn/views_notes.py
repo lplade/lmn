@@ -61,18 +61,18 @@ def search_notes(request):
     """Allows user to query for all notes where text like x and user = user"""
 
     form = SearchNoteForm()
-    search_term = request.GET.get('search_notes')
+    search_term = request.GET.get('text')
 
     if search_term:
-        notes = Notes.objects.all().filter(
-            user=request.user.pk
+        notes = Note.objects.all().filter(
+            user=request.user.id
         ).filter(
             text__icontains=search_term
         ).order_by(
             'posted_date'
         ).reverse()
     else:
-        notes = Notes.objects.all().filter(user=request.user.pk)
+        notes = {}
 
     return render(request, 'lmn/notes/search_notes.html',
                   {'form': form, 'notes': notes, 'search_term': search_term})
