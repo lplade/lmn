@@ -18,7 +18,7 @@ start postgres shell with `psql`
 And create a user called lmnop
 
 ```
-create user lmnop with password 'password_here'; 
+create user lmnop with password 'password_here';
 ```
 
 create a database lmnop
@@ -27,8 +27,8 @@ create a database lmnop
 create database lmnop owner lmnop;
 ```
 
-Various postgres shell commands 
-connect to lmnop database 
+Various postgres shell commands
+connect to lmnop database
 
 ```
 \c lmnop
@@ -46,12 +46,12 @@ POSTGRES_LMNOP_USER_PASSWORD
 with a value of the lmnop user's password
 
 
-(Mac users may need to run these commands; these one time 
+(Mac users may need to run these commands; these one time
 
 `sudo ln -s /Library/PosgreSQL/9.5/lib/libssl.1.0.0.dylib /usr/local/lib
 sudo ln -s /Library/PosgreSQL/9.5/lib/libcrypto.1.0.0.dylib /usr/local/lib`
 
-And this when you start a new shell; or set it permanently in .bash_profile 
+And this when you start a new shell; or set it permanently in .bash_profile
 `export DYLD_FALLBACK_LIBRARY_PATH=/Library/PostgreSQL/9.5/lib:$DYLD_LIBRARY_PATH`
 )
 
@@ -115,3 +115,10 @@ From directory with manage.py in it,
 coverage run --source='.' manage.py test lmn.tests
 
 coverage report
+
+
+### Eventful key
+Go to (http://eventful.com) and sing up.
+	Once you sign up and are logged in, scroll down to the bottom of the main page and click on "Developer API"
+	Under "Tools" click on The Application keys and follow the instructions to set up a new account.
+	(The site will ask you for an URL I think, just use the local one 127..5000 and in the text box add comments that is for school project, use the project's name.)
