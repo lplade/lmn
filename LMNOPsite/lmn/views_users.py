@@ -13,6 +13,7 @@ from django.utils import timezone
 
 
 def user_profile(request, user_pk):
+
     user = User.objects.get(pk=user_pk)
     usernotes = Note.objects.filter(
         user=user.pk).order_by('posted_date').reverse()
@@ -23,8 +24,15 @@ def user_profile(request, user_pk):
 
 @login_required
 def my_user_profile(request):
+    """
+    User modification view
+    GET: render UserModificationForm (/LMNOPsite/lmn/views.py)
+    POST: query lmnop DB for user by pk, update user with information from
+        form.
+    """
     if request.method == 'POST':
         form = UserModificationForm(request.POST)
+
         if form.is_valid():
             data = form.cleaned_data
             user = User.objects.get(pk=request.user.id)
@@ -33,7 +41,9 @@ def my_user_profile(request):
             user.email = data['email']
             user.password = data['password1']
             user.save()
+
             return redirect('lmn:homepage')
+
         else:
             return render(request, 'lmn/users/modify_user.html',
                           {'form': form})
@@ -43,7 +53,9 @@ def my_user_profile(request):
 
 
 def register(request):
-
+    """
+    Allows users to register profiles using built-in Django model auth.user
+    """
     if request.method == 'POST':
 
         form = UserRegistrationForm(request.POST)
@@ -66,4 +78,5 @@ def register(request):
 
 
 def logout_message(request):
+    """Logout redirect"""
     return render(request, 'lmn/users/logout_message.html')

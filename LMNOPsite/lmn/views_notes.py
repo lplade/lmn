@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Venue, Artist, Note, Show
-from .forms import VenueSearchForm, NewNoteForm, ArtistSearchForm, UserRegistrationForm
+from .forms import VenueSearchForm, NewNoteForm,\
+    ArtistSearchForm, UserRegistrationForm, SearchNoteForm
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -20,7 +21,7 @@ def new_note(request, show_pk):
         form = NewNoteForm(request.POST, request.FILES)
         if form.is_valid():
 
-            note = form.save(commit=False);
+            note = form.save(commit=False)
             if note.title and note.text:  # If note has both title and text
                 note.user = request.user
                 note.show = show
@@ -28,16 +29,16 @@ def new_note(request, show_pk):
                 note.save()
                 return redirect('lmn:note_detail', note_pk=note.pk)
 
-    else :
+    else:
         form = NewNoteForm()
 
-    return render(request, 'lmn/notes/new_note.html' , { 'form' : form , 'show':show })
-
+    return render(request, 'lmn/notes/new_note.html',
+                  {'form': form, 'show': show})
 
 
 def latest_notes(request):
     notes = Note.objects.all().order_by('posted_date').reverse()
-    return render(request, 'lmn/notes/note_list.html', {'notes':notes})
+    return render(request, 'lmn/notes/note_list.html', {'notes': notes})
 
 
 def notes_for_show(request, show_pk):   # pk = show pk
@@ -46,10 +47,32 @@ def notes_for_show(request, show_pk):   # pk = show pk
     notes = Note.objects.filter(show=show_pk).order_by('posted_date').reverse()
     show = Show.objects.get(pk=show_pk)  # Contains artist, venue
 
-    return render(request, 'lmn/notes/note_list.html', {'show': show, 'notes':notes } )
-
+    return render(request, 'lmn/notes/note_list.html',
+                  {'show': show, 'notes': notes})
 
 
 def note_detail(request, note_pk):
     note = get_object_or_404(Note, pk=note_pk)
-    return render(request, 'lmn/notes/note_detail.html' , {'note' : note })
+    return render(request, 'lmn/notes/note_detail.html', {'note': note})
+
+
+@login_required
+def search_notes(request):
+    """Allows user to query for all notes where text like x and user = user"""
+
+    form = SearchNoteForm()
+    search_term = request.GET.get('text')
+
+    if search_term:
+        notes = Note.objects.all().filter(
+            user=request.user.id
+        ).filter(
+            text__icontains=search_term
+        ).order_by(
+            'posted_date'
+        ).reverse()
+    else:
+        notes = {}
+
+    return render(request, 'lmn/notes/search_notes.html',
+                  {'form': form, 'notes': notes, 'search_term': search_term})

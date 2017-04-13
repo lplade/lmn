@@ -21,6 +21,13 @@ class NewNoteForm(forms.ModelForm):
         fields = ('title', 'text', 'document')
 
 
+class SearchNoteForm(forms.ModelForm):
+
+    class Meta:
+        model = Note
+        fields = ('text', )
+
+
 class UserRegistrationForm(UserCreationForm):
 
     class Meta:
@@ -35,7 +42,7 @@ class UserRegistrationForm(UserCreationForm):
         if not username:
             raise ValidationError('Please enter a username')
 
-        if User.objects.filter(username__iexact=username).exists():
+        if User.objects.filter(username__icontains=username).exists():
             raise ValidationError('A user with that username already exists')
 
         return username
