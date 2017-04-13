@@ -1,5 +1,5 @@
 from django import forms
-from .models import Note
+from .models import Note, Profile
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -22,7 +22,9 @@ class NewNoteForm(forms.ModelForm):
 
 
 class SearchNoteForm(forms.ModelForm):
-
+    # TODO modify this to be a form.Form
+    # Class SearchNoteForm(forms.Form):
+    # forms.Charfield(label="Note Search", max_length=200)
     class Meta:
         model = Note
         fields = ('text', )
@@ -110,3 +112,9 @@ class UserModificationForm(UserCreationForm):
             raise ValidationError('Please enter an email address')
 
         return email
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('description', 'favorite_bands')

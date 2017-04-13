@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 # from .restrict_file import ContentTypeRestrictedFileField
 from .validators import file_size, image_extensions
 
@@ -17,6 +19,31 @@ User._meta.get_field('email')._unique = True
 User._meta.get_field('email')._blank = False
 User._meta.get_field('last_name')._blank = False
 User._meta.get_field('first_name')._blank = False
+
+
+class Profile(models.Model):
+    """User profile"""
+    # from simpleisbetterthancomplex.com
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    description = models.CharField(max_length=200)
+    favorite_bands = models.CharField(max_length=60)
+    starred_user = models.BooleanField(default=False)
+
+    def __str__(self):
+        return '{}, {}\n Favorite bands: {}'.format(
+            self.profile_name, self.description, self.favorite_bands
+        )
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+
+
+@receiver
+def save_user_profile(post_save, sender=User):
+    instance.profile.save()
 
 
 ''' A music artist '''
@@ -39,7 +66,9 @@ class Venue(models.Model):
     state = models.CharField(max_length=2, blank=False)
 
     def __str__(self):
-        return 'Venue name: {} in {}, {}'.format(self.name, self.city, self.state)
+        return 'Venue name: {} in {}, {}'.format(
+            self.name, self.city, self.state
+        )
 
 
 ''' A show - one artist playing at one venue at a particular date. '''
@@ -51,7 +80,9 @@ class Show(models.Model):
     venue = models.ForeignKey(Venue)
 
     def __str__(self):
-        return 'Show with artist {} at {} on {}'.format(self.artist, self.venue, self.show_date)
+        return 'Show with artist {} at {} on {}'.format(
+            self.artist, self.venue, self.show_date
+        )
 
 
 ''' One user's opinion of one show. '''
@@ -63,8 +94,12 @@ class Note(models.Model):
     title = models.CharField(max_length=200, blank=False)
     text = models.TextField(max_length=1000, blank=False)
     posted_date = models.DateTimeField(blank=False)
-    document = models.FileField(upload_to='images/', validators=[file_size, image_extensions])
-    # document = ContentTypeRestrictedFileField(upload_to='images/', content_types=['image/jpeg', 'image/gif', 'image/png', 'image/tiff'], max_upload_size=10000000, blank=True)
+    document = models.FileField(
+        upload_to='images/', validators=[file_size, image_extensions])
+    # document = ContentTypeRestrictedFileField(
+    # upload_to='images/', content_types=[
+    # 'image/jpeg', 'image/gif', 'image/png', 'image/tiff'],
+    # max_upload_size=10000000, blank=True)
 
     def publish(self):
         posted_date = datetime.datetime.today()
