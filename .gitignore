@@ -1,4 +1,6 @@
 venv/
+# Jeremy's virtual env
+env/
 *.pyc
 __pycache__
 LMNOPsite/lmn/__pycache__/
@@ -13,12 +15,16 @@ LMNOPsite/geckodriver.log
 # PyCharm / IDEA
 .idea
 
-
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 
+# Eventful API secrets
 secrets.py
 eventful_data/secrets.py
 eventful_data/MN_venues_data.json
+
+# Static web server files - autocreated by collectstatic
+www/
+media/
