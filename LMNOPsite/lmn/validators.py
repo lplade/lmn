@@ -22,3 +22,6 @@ def image_extensions(value):
     valid_extensions = ['.jpeg', '.jpg', '.gif', '.png']
     if not ext.lower() in valid_extensions:
         raise ValidationError('Unsupported file extension.')
+
+# TODO actually check content type and not rely on extensions (security)
+
