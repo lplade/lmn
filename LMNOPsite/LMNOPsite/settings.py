@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'lmn',
-    'social_django',
+    # 'social_django',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -103,7 +103,7 @@ else:
 
 # authentication backends
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.twitter.TwitterOAuth',
+    # 'social_core.backends.twitter.TwitterOAuth',
     'django.contrib.auth.backends.ModelBackend',  # default password based
 )
 

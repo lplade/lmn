@@ -35,7 +35,7 @@ urlpatterns = [
     url(r'^', include('lmn.urls')),
 
     # Social auth
-    url('', include('social_django.urls', namespace='social')),
+    # url('', include('social_django.urls', namespace='social')),
 
 ]
 
