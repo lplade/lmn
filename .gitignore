@@ -23,3 +23,4 @@ LMNOPsite/geckodriver.log
 
 # Static web server files - autocreated by collectstatic
 www/
+media/
