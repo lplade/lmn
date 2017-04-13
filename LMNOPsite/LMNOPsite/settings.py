@@ -72,6 +72,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'LMNOPsite.wsgi.application'
 
+# Only used if we set custom namespace
+# SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
