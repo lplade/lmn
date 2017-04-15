@@ -1,8 +1,8 @@
-#LMNOP
+# LMNOP
 
 ## Live Music Notes, Opinions, Photographs
 
-###Install postgresql
+### Install postgresql
 
 https://github.com/DjangoGirls/tutorial-extensions/blob/master/optional_postgresql_installation/README.md
 
@@ -56,7 +56,7 @@ And this when you start a new shell; or set it permanently in .bash_profile
     export DYLD_FALLBACK_LIBRARY_PATH=/Library/PostgreSQL/9.5/lib:$DYLD_LIBRARY_PATH
 )
 
-###To install
+### To install
 
 1. Create and activate a virtual environment. Use Python3 as the interpreter.
 
@@ -74,7 +74,7 @@ Site at
 
 127.0.0.1:8000
 
-###Create superuser
+### Create superuser
 
 from LMNOP/LMNOPSite
 
