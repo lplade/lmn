@@ -122,3 +122,8 @@ Go to (http://eventful.com) and sing up.
 	Once you sign up and are logged in, scroll down to the bottom of the main page and click on "Developer API"
 	Under "Tools" click on The Application keys and follow the instructions to set up a new account.
 	(The site will ask you for an URL I think, just use the local one 127..5000 and in the text box add comments that is for school project, use the project's name.)
+
+### Twitter keys
+Create a Twitter account (using your personal account not really recommended).
+
+    

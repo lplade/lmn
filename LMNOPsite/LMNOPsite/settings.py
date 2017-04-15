@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # 'social_django',
 ]
 
+# TODO this is apparently deprecated and we're supposed to use MIDDLEWARE instead
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
