@@ -37,9 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'lmn'
+    'lmn',
+    # 'social_django',
 ]
 
+# TODO this is apparently deprecated and we're supposed to use MIDDLEWARE instead
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -71,6 +73,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'LMNOPsite.wsgi.application'
 
+# Only used if we set custom namespace
+# SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
@@ -97,6 +102,11 @@ else:
         }
     }
 
+# authentication backends
+AUTHENTICATION_BACKENDS = (
+    # 'social_core.backends.twitter.TwitterOAuth',
+    'django.contrib.auth.backends.ModelBackend',  # default password based
+)
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
