@@ -176,6 +176,9 @@ if 'AWS_ACCESS_KEY_ID' in os.environ:
     STATICFILES_STORAGE = 'LMNOPsite.custom_storages.StaticStorage'
     # STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
+    # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
+    # NOTE: Django’s STATIC_URL must end in a slash and the AWS_S3_CUSTOM_DOMAIN must not. It is best to set this variable indepedently of STATIC_URL.
+
     MEDIAFILES_LOCATION = 'media/'
     MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 
