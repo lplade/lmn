@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',  # Amazon S3
     'lmn',
-    'storages',
+
 ]
 
 # TODO this is apparently deprecated and we're supposed to use MIDDLEWARE instead
@@ -168,6 +169,7 @@ if ('AWS_ACCESS_KEY_ID' in os.environ) \
     AWS_STORAGE_BUCKET_NAME = 'lmnop-files'
     AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
     AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+    AWS_QUERYSTRING_AUTH = False
 
     # Serve 'static' files in templates from S3
     AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
@@ -177,12 +179,10 @@ if ('AWS_ACCESS_KEY_ID' in os.environ) \
     STATICFILES_STORAGE = 'LMNOPsite.custom_storages.StaticStorage'
     # STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
-
     MEDIAFILES_LOCATION = 'media'
     MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
-    MEDIA_ROOT = AWS_S3_CUSTOM_DOMAIN + MEDIA_URL
 
     STATICFILES_LOCATION = 'static'
-    STATIC_URL = "https://%s/%s" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
-    STATIC_ROOT = AWS_S3_CUSTOM_DOMAIN + STATIC_URL
+    STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+
 
