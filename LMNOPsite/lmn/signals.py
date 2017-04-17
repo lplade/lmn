@@ -13,6 +13,8 @@ def post_to_twitter(sender, instance, created, **kwargs):
     note = instance
     # only tweet on creation, not updates or deletions
     if created:
-        tweet(note.text)  # TODO error handling
+        # TODO would like to pass REST url of note as second parameter
+        # Not sure how to get that
+        tweet(note.title)  # TODO error handling
 
 
