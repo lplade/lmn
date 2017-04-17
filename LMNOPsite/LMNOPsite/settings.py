@@ -177,9 +177,12 @@ if ('AWS_ACCESS_KEY_ID' in os.environ) \
     STATICFILES_STORAGE = 'LMNOPsite.custom_storages.StaticStorage'
     # STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
+
     MEDIAFILES_LOCATION = 'media'
     MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+    MEDIA_ROOT = AWS_S3_CUSTOM_DOMAIN + MEDIA_URL
 
     STATICFILES_LOCATION = 'static'
     STATIC_URL = "https://%s/%s" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+    STATIC_ROOT = AWS_S3_CUSTOM_DOMAIN + STATIC_URL
 
