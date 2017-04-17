@@ -135,3 +135,7 @@ be stored as system environment variables:
 * TWITTER_ACCESS_TOKEN
 * TWITTER_ACCESS_TOKEN_SECRET
 
+### AWS keys
+When running on AWS, set the following keys to serve static files from an S3 bucket:
+* AWS_ACCESS_KEY_ID
+* AWS_SECRET_ACCESS_KEY

@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'lmn',
-    # 'social_django',
+    'storages',
 ]
 
 # TODO this is apparently deprecated and we're supposed to use MIDDLEWARE instead
@@ -154,3 +154,32 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Should provide the user object.
 LOGIN_REDIRECT_URL = 'lmn:my_user_profile'
 LOGOUT_REDIRECT_URL = 'lmn:homepage'
+
+# Settings for AWS S3 storage
+if ('AWS_ACCESS_KEY_ID' in os.environ) \
+        and ('AWS_SECRET_ACCESS_KEY' in os.environ):
+    # Tells browsers to cache S3 files for (almost) forever
+    AWS_HEADERS = {
+        # see http://developer.yahoo.com/performance/rules.html#expires
+        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+        'Cache-Control': 'max-age=94608000',
+    }
+
+    AWS_STORAGE_BUCKET_NAME = 'lmnop-files'
+    AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+    AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+
+    # Serve 'static' files in templates from S3
+    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+    # Use S3Boto storage when running collectstatic
+    STATICFILES_STORAGE = 'LMNOPsite.custom_storages.StaticStorage'
+    # STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
+    STATICFILES_LOCATION = 'static'
+    STATIC_URL = "https://%s/%s" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+
+    MEDIAFILES_LOCATION = 'media'
+    MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+
+    DEFAULT_FILE_STORAGE = 'LMNOPsite.custom_storages.MediaStorage'
