@@ -144,11 +144,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, '..', 'www', 'static')
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, '..', 'www', 'static')
 
 # Where to send user after successful login if no other page is provided.
 # Should provide the user object.
@@ -173,13 +173,13 @@ if ('AWS_ACCESS_KEY_ID' in os.environ) \
     AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
     # Use S3Boto storage when running collectstatic
+    DEFAULT_FILE_STORAGE = 'LMNOPsite.custom_storages.MediaStorage'
     STATICFILES_STORAGE = 'LMNOPsite.custom_storages.StaticStorage'
     # STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-
-    STATICFILES_LOCATION = 'static'
-    STATIC_URL = "https://%s/%s" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
 
     MEDIAFILES_LOCATION = 'media'
     MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 
-    DEFAULT_FILE_STORAGE = 'LMNOPsite.custom_storages.MediaStorage'
+    STATICFILES_LOCATION = 'static'
+    STATIC_URL = "https://%s/%s" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+
