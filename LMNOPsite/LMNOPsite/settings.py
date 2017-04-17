@@ -155,7 +155,8 @@ LOGIN_REDIRECT_URL = 'lmn:my_user_profile'
 LOGOUT_REDIRECT_URL = 'lmn:homepage'
 
 # Settings for AWS S3 storage
-if 'AWS_ACCESS_KEY_ID' in os.environ:
+if ('AWS_ACCESS_KEY_ID' in os.environ)\
+        and ('AWS_SECRET_ACCESS_KEY' in os.environ):
     # Tells browsers to cache S3 files for (almost) forever
     AWS_HEADERS = {
         # see http://developer.yahoo.com/performance/rules.html#expires
