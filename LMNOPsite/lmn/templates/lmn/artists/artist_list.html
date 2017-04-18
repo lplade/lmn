@@ -21,7 +21,7 @@
     <div class="row">
 
     {% for artist in artists %}
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="artist" id="artist_{{ artist.pk }}">
@@ -40,7 +40,7 @@
         </div>
 
     {% empty %}
-        <div class="col-md-4">
+        <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-body panel-warning">
                         <P>No artists found</P>
