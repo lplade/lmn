@@ -139,3 +139,13 @@ be stored as system environment variables:
 When running on AWS, set the following keys to serve static files from an S3 bucket:
 * AWS_ACCESS_KEY_ID
 * AWS_SECRET_ACCESS_KEY
+
+### Configuration
+Set DJANGO_SECRET_KEY before running. Can generate from Python console with
+```
+import random
+print(''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)') for i in range(50)]))
+```
+
+Set DJANGO_DEBUG=1 for debug mode
+
