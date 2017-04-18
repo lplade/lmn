@@ -163,10 +163,14 @@ if ('AWS_ACCESS_KEY_ID' in os.environ)\
     #     'Cache-Control': 'max-age=94608000',
     # }
 
+
     AWS_STORAGE_BUCKET_NAME = 'lmnop-files'
     AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
     AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
     AWS_QUERYSTRING_AUTH = False
+    # Troubleshooting SSL...
+    AWS_S3_USE_SSL = False
+    AWS_S3_SECURE_URLS = False
 
     # Serve 'static' files in templates from S3
     AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
@@ -181,10 +185,10 @@ if ('AWS_ACCESS_KEY_ID' in os.environ)\
     # It is best to set this variable indepedently of STATIC_URL.
 
     MEDIAFILES_LOCATION = 'media/'
-    MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+    MEDIA_URL = "http://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 
     STATICFILES_LOCATION = 'static/'
-    STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+    STATIC_URL = "http://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
 else:
     logger.debug("Not using AWS for static files")
     # Static files (CSS, JavaScript, Images)
@@ -195,5 +199,4 @@ else:
 
     STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(BASE_DIR, '..', 'www', 'static')
-
 
