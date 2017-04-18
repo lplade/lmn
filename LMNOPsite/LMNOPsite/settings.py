@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,10 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '8c01$#j44g3znb)$q0()8)!%ts-jc)k12!a75-!63qb%bj=d4k'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+if os.getenv('DJANGO_DEBUG'):
+    DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -37,12 +42,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',  # Amazon S3
     'lmn',
-    'storages',
+
 ]
 
-# TODO this is apparently deprecated and we're supposed to use MIDDLEWARE instead
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -104,7 +109,6 @@ else:
 
 # authentication backends
 AUTHENTICATION_BACKENDS = (
-    # 'social_core.backends.twitter.TwitterOAuth',
     'django.contrib.auth.backends.ModelBackend',  # default password based
 )
 
@@ -113,19 +117,22 @@ AUTHENTICATION_BACKENDS = (
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation'
+                '.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation'
+                '.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation'
+                '.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation'
+                '.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
@@ -140,46 +147,56 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.9/howto/static-files/
-
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, '..', 'www', 'static')
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 # Where to send user after successful login if no other page is provided.
 # Should provide the user object.
 LOGIN_REDIRECT_URL = 'lmn:my_user_profile'
 LOGOUT_REDIRECT_URL = 'lmn:homepage'
 
 # Settings for AWS S3 storage
-if ('AWS_ACCESS_KEY_ID' in os.environ) \
-        and ('AWS_SECRET_ACCESS_KEY' in os.environ):
+if ('AWS_ACCESS_KEY_ID' in os.environ)\
+        and ('AWS_SECRET_KEY' in os.environ):
+    logger.debug("We are on AWS")
     # Tells browsers to cache S3 files for (almost) forever
-    AWS_HEADERS = {
-        # see http://developer.yahoo.com/performance/rules.html#expires
-        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
-        'Cache-Control': 'max-age=94608000',
-    }
+    # AWS_HEADERS = {
+    #     # see http://developer.yahoo.com/performance/rules.html#expires
+    #     'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+    #     'Cache-Control': 'max-age=94608000',
+    # }
 
     AWS_STORAGE_BUCKET_NAME = 'lmnop-files'
     AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-    AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+    AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_KEY']
+    AWS_QUERYSTRING_AUTH = False
+    # Troubleshooting SSL...
+    AWS_S3_USE_SSL = False
+    AWS_S3_SECURE_URLS = False
 
     # Serve 'static' files in templates from S3
     AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
+    # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
+    # NOTE: Django’s STATIC_URL must end in a slash and the AWS_S3_CUSTOM_DOMAIN must not.
+    # It is best to set this variable indepedently of STATIC_URL.
+
+    MEDIAFILES_LOCATION = 'media/'
+    MEDIA_URL = "http://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+
+    STATICFILES_LOCATION = 'static/'
+    STATIC_URL = "http://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+
     # Use S3Boto storage when running collectstatic
+    DEFAULT_FILE_STORAGE = 'LMNOPsite.custom_storages.MediaStorage'
     STATICFILES_STORAGE = 'LMNOPsite.custom_storages.StaticStorage'
     # STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
-    STATICFILES_LOCATION = 'static'
-    STATIC_URL = "https://%s/%s" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+else:
+    logger.debug("Not using AWS for static files")
+    # Static files (CSS, JavaScript, Images)
+    # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-    MEDIAFILES_LOCATION = 'media'
-    MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-    DEFAULT_FILE_STORAGE = 'LMNOPsite.custom_storages.MediaStorage'
+    STATIC_URL = '/static/'
+    STATIC_ROOT = os.path.join(BASE_DIR, '..', 'www', 'static')
+
