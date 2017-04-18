@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.signals import user_logged_in
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -31,7 +32,7 @@ class Profile(models.Model):
 
     def __str__(self):
         return '{}, {}\n Favorite bands: {}'.format(
-            self.profile_name, self.description, self.favorite_bands
+            self.user, self.description, self.favorite_bands
         )
 
 # Technically unrelated to models; however, these signals are crucial for the

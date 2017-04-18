@@ -9,6 +9,8 @@ from django.contrib.auth import update_session_auth_hash
 
 from django.shortcuts import render, redirect
 
+from django.core.exceptions import ObjectDoesNotExist
+
 from django.utils import timezone
 
 
@@ -25,7 +27,13 @@ def user_profile(request, user_pk):
 @login_required
 def my_user_profile(request):
 
-    profile = Profile.objects.get(user=request.user.id)
+    try:
+
+        profile = Profile.objects.get(user=request.user.id)
+
+    except ObjectDoesNotExist:
+
+        profile = None
 
     if request.method == 'POST':
 
