@@ -3,14 +3,14 @@
 {% block content %}
 
 <!--- User note search --->
-<div name="row">
-    <div name="col-sm-12">
+<div class="row">
+    <div class="col-sm-12">
         <form action="{% url 'lmn:search_notes' %}">
             {{ form.as_table }}
             <input type="submit" value="Search">
         </form>
     </div>
-    <div name="col-sm-12">
+    <div class="col-sm-12">
         {% if search_term %}
             <h2>Notes containing '{{ search_term }}'</h2>
         {% else %}
@@ -18,10 +18,10 @@
         {% endif %}
     </div>
 </div>
-<div name="row">
-    <div name="col-lg-12">
+<div class="row">
+    <div class="col-lg-12">
         {% for note in notes %}
-        <div name="col-sm-8">
+        <div class="col-sm-8">
             <div class='note' id="note_{{ note.pk }}">
                 <h3 class="note_title"><a href="{% url 'lmn:note_detail' note_pk=note.pk %}">{{ note.title }}</a></h3>
                 <P class="note_info">{{ note.show.artist.name }} at {{ note.show.venue.name }} on {{ note.show.show_date }}</P>
