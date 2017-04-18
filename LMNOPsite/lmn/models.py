@@ -63,12 +63,20 @@ class Note(models.Model):
     title = models.CharField(max_length=200, blank=False)
     text = models.TextField(max_length=1000, blank=False)
     posted_date = models.DateTimeField(blank=False)
-    document = models.FileField(upload_to='images/', validators=[file_size, image_extensions])
-    # document = ContentTypeRestrictedFileField(upload_to='images/', content_types=['image/jpeg', 'image/gif', 'image/png', 'image/tiff'], max_upload_size=10000000, blank=True)
+    document = models.FileField(upload_to='images/',
+                                validators=[file_size, image_extensions])
+    # document = ContentTypeRestrictedFileField(
+    #     upload_to='images/', content_types=[
+    #     'image/jpeg', 'image/gif', 'image/png',
+    #     'image/tiff'], max_upload_size=10000000, blank=True)
 
     def publish(self):
         posted_date = datetime.datetime.today()
         self.save()
 
     def __str__(self):
-        return 'Note for user ID {} for show ID {} with title {} text {} posted on {} picture {}'.format(self.user, self.show, self.title, self.text, self.posted_date, self.document)
+        return 'Note for user ID {} for show ID {} with ' \
+               'title {} text {} posted on {} picture {}'\
+            .format(self.user, self.show, self.title,
+                    self.text, self.posted_date, self.document)
+

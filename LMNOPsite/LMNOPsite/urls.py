@@ -33,6 +33,10 @@ urlpatterns = [
     # large files until I fix to limit file size
     url(r'^register/$', page_not_found, name='register'),
     url(r'^', include('lmn.urls')),
+
+    # Social auth
+    # url('', include('social_django.urls', namespace='social')),
+
 ]
 
 if settings.DEBUG:

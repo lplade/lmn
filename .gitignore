@@ -28,3 +28,6 @@ eventful_data/MN_venues_data.json
 # Static web server files - autocreated by collectstatic
 www/
 media/
+
+# Script that sets local environmental variables for testing
+secrets.sh
