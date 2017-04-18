@@ -28,4 +28,6 @@ Text truncated to 200 characters. -->
     {% endfor %}
 </div>
 <hr>
-<a href="{% url 'lmn:my_user_profile' %}">Modify account information</a> {% endblock %}
+<a href="{% url 'lmn:my_user_profile' %}">Edit profile information</a> |
+<a href="{% url 'lmn:modify_user' %}">Change email or password</a>
+{% endblock %}

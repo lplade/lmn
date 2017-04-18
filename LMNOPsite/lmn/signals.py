@@ -16,5 +16,3 @@ def post_to_twitter(sender, instance, created, **kwargs):
         # TODO would like to pass REST url of note as second parameter
         # Not sure how to get that
         tweet(note.title)  # TODO error handling
-
-
