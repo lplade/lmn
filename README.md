@@ -138,7 +138,7 @@ be stored as system environment variables:
 ### AWS keys
 When running on AWS, set the following keys to serve static files from an S3 bucket:
 * AWS_ACCESS_KEY_ID
-* AWS_SECRET_ACCESS_KEY
+* AWS_SECRET_KEY (*not* AWS_SECRET_ACCESS_KEY)
 
 ### Configuration
 Set DJANGO_SECRET_KEY before running. Can generate from Python console with

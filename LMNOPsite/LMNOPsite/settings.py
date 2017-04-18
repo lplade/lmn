@@ -154,7 +154,7 @@ LOGOUT_REDIRECT_URL = 'lmn:homepage'
 
 # Settings for AWS S3 storage
 if ('AWS_ACCESS_KEY_ID' in os.environ)\
-        and ('AWS_SECRET_ACCESS_KEY' in os.environ):
+        and ('AWS_SECRET_KEY' in os.environ):
     logger.debug("We are on AWS")
     # Tells browsers to cache S3 files for (almost) forever
     # AWS_HEADERS = {
@@ -165,7 +165,7 @@ if ('AWS_ACCESS_KEY_ID' in os.environ)\
 
     AWS_STORAGE_BUCKET_NAME = 'lmnop-files'
     AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-    AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+    AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_KEY']
     AWS_QUERYSTRING_AUTH = False
     # Troubleshooting SSL...
     AWS_S3_USE_SSL = False
@@ -174,7 +174,7 @@ if ('AWS_ACCESS_KEY_ID' in os.environ)\
     # Serve 'static' files in templates from S3
     AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-       # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
+    # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
     # NOTE: Django’s STATIC_URL must end in a slash and the AWS_S3_CUSTOM_DOMAIN must not.
     # It is best to set this variable indepedently of STATIC_URL.
 
