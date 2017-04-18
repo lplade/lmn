@@ -163,7 +163,6 @@ if ('AWS_ACCESS_KEY_ID' in os.environ)\
     #     'Cache-Control': 'max-age=94608000',
     # }
 
-
     AWS_STORAGE_BUCKET_NAME = 'lmnop-files'
     AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
     AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
@@ -175,12 +174,7 @@ if ('AWS_ACCESS_KEY_ID' in os.environ)\
     # Serve 'static' files in templates from S3
     AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-    # Use S3Boto storage when running collectstatic
-    DEFAULT_FILE_STORAGE = 'LMNOPsite.custom_storages.MediaStorage'
-    STATICFILES_STORAGE = 'LMNOPsite.custom_storages.StaticStorage'
-    # STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-
-    # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
+       # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
     # NOTE: Django’s STATIC_URL must end in a slash and the AWS_S3_CUSTOM_DOMAIN must not.
     # It is best to set this variable indepedently of STATIC_URL.
 
@@ -189,6 +183,12 @@ if ('AWS_ACCESS_KEY_ID' in os.environ)\
 
     STATICFILES_LOCATION = 'static/'
     STATIC_URL = "http://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+
+    # Use S3Boto storage when running collectstatic
+    DEFAULT_FILE_STORAGE = 'LMNOPsite.custom_storages.MediaStorage'
+    STATICFILES_STORAGE = 'LMNOPsite.custom_storages.StaticStorage'
+    # STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
 else:
     logger.debug("Not using AWS for static files")
     # Static files (CSS, JavaScript, Images)
