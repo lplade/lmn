@@ -24,4 +24,3 @@ def image_extensions(value):
         raise ValidationError('Unsupported file extension.')
 
 # TODO actually check content type and not rely on extensions (security)
-
