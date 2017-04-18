@@ -101,6 +101,12 @@ urlpatterns = [
     ),
 
     url(
+        r'^user/modify_user/',
+        views_users.modify_user,
+        name='modify_user'
+    ),
+
+    url(
         r'^user/logout_message/',
         views_users.logout_message,
         name='logout_message'
