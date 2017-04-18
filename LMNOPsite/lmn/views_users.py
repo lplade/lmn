@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 
-from .models import Venue, Artist, Note, Show
+from .models import Venue, Artist, Note, Show, Profile
 from .forms import VenueSearchForm, NewNoteForm, ArtistSearchForm, \
-    UserRegistrationForm, UserModificationForm
+    UserRegistrationForm, UserModificationForm, UserProfileForm
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -24,6 +24,31 @@ def user_profile(request, user_pk):
 
 @login_required
 def my_user_profile(request):
+
+    profile = Profile.objects.get(user=request.user.id)
+
+    if request.method == 'POST':
+
+        form = UserProfileForm(request.POST)
+
+        if form.is_valid():
+
+            data = form.cleaned_data
+            profile.description = data['description']
+            profile.favorite_bands = data['favorite_bands']
+            profile.save()
+
+        return render(request, 'lmn/users/modify_user.html', {'form': form, 'profile': profile})
+
+    else:
+
+        form = UserProfileForm()
+
+    return render(request, 'lmn/users/modify_user.html', {'form': form, 'profile': profile})
+
+
+@login_required
+def modify_user(request):
     """
     User modification view
     GET: render UserModificationForm (/LMNOPsite/lmn/views.py)
@@ -45,11 +70,11 @@ def my_user_profile(request):
             return redirect('lmn:homepage')
 
         else:
-            return render(request, 'lmn/users/modify_user.html',
+            return render(request, 'lmn/users/change_password.html',
                           {'form': form})
     else:
         form = UserModificationForm()
-        return render(request, 'lmn/users/modify_user.html', {'form': form})
+        return render(request, 'lmn/users/change_password.html', {'form': form})
 
 
 def register(request):

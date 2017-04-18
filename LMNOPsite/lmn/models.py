@@ -20,6 +20,8 @@ User._meta.get_field('email')._blank = False
 User._meta.get_field('last_name')._blank = False
 User._meta.get_field('first_name')._blank = False
 
+##############################################################################
+
 
 class Profile(models.Model):
     """User profile"""
@@ -34,32 +36,35 @@ class Profile(models.Model):
             self.profile_name, self.description, self.favorite_bands
         )
 
+# Technically unrelated to models; however, these signals are crucial for the
+# concurrent creation of the Profile model whenever a Django User model is
+# created.
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        UserProfile.objects.create(user=instance)
+        Profile.objects.create(user=instance)
 
 
-@receiver
-def save_user_profile(post_save, sender=User):
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
-
-''' A music artist '''
+##############################################################################
 
 
 class Artist(models.Model):
+    """Representative of a music artist"""
     name = models.CharField(max_length=200, blank=False)
 
     def __str__(self):
         return "Artist: " + self.name
 
 
-''' A venue, that hosts shows. '''
-
-
 class Venue(models.Model):
+    """Venue object."""
+    # TODO Add more information to the venue model
     name = models.CharField(max_length=200, blank=False, unique=True)
     city = models.CharField(max_length=200, blank=False)
     # What about international?

@@ -22,9 +22,9 @@ class NewNoteForm(forms.ModelForm):
 
 
 class SearchNoteForm(forms.ModelForm):
-    # TODO modify this to be a form.Form
-    # Class SearchNoteForm(forms.Form):
-    # forms.Charfield(label="Note Search", max_length=200)
+    # TODO change form to use forms.Form
+    # class SearchNoteForm(forms.Form):
+    # search_name = forms.CharField(label="Search Notes", max_length=255)
     class Meta:
         model = Note
         fields = ('text', )
@@ -117,4 +117,4 @@ class UserModificationForm(UserCreationForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('description', 'favorite_bands')
+        fields = ['description', 'favorite_bands']
