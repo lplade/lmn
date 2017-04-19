@@ -1,4 +1,5 @@
 {% extends 'lmn/base.html' %}
+{% load static from staticfiles %}
 {% block content %}
 
     <h2>Artist List</h2>
@@ -6,8 +7,9 @@
     <P>Artist Search</p>
       <form method="POST" action="{% url 'lmn:artist_list' %}">
       {% csrf_token %}
-      <input id='artist_search' name="search_artist" type='text'/>
-      <button  type='submit' value ='artist_search'>Search</button>
+          <label for="artist_search">Artist search</label>
+          <input id='artist_search' name="search_artist" type='text'/>
+        <button  type='submit' value ='artist_search'>Search</button>
       </form>
     </div>
 
@@ -53,4 +55,9 @@
     {% endfor %}
 </div>
 
+{% endblock %}
+{% block jsincludes %}
+    <!-- Needed for form autocomplete -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="{% static 'js/autocompleteArtist.js' %}"></script>
 {% endblock %}

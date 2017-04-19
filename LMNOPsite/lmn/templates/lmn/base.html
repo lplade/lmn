@@ -20,7 +20,7 @@
     <![endif]-->
     <link rel="stylesheet" href='{% static 'css/base_style.css' %}'>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
+    <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
 
 </head>
 
@@ -57,6 +57,7 @@
     <div class="row">
         <div class="col-md-8">
             {% block content %}
+                {# Actual page content goes here!! #}
             {% endblock %}
         </div>
         <div class="col-md-4">
@@ -66,75 +67,17 @@
 
 </div> <!-- Bootstrap container close -->
 
-{% block jsincludes %}
+{% block scripts %}
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <!-- This function is for venues -->
-    <script>
-    $( function() {
-      var venues_list = ['First Ave', 'Target Field', 'Target Center', 'May Day Stadium', 'Salt Lake Stadium', 'Michigan Stadium', 'Beaver Stadium', 'Estadio Azteca', 'Neyland Stadium', 'Ohio Stadium', 'Bryant-Denny Stadium', 'Darrell K Royal – Texas Memorial Stadium', 'Darrell K. Royal-Texas Memorial Stadium', 'Melbourne Cricket Ground',
-      'Azadi Stadium', 'Camp Nou', 'FNB Stadium', 'Los Angeles Memorial Coliseum', 'Sanford Stadium', 'Rose Bowl', 'Tiger Stadium', 'Cotton Bowl', 'FedEx Field', 'FedExField', 'Eden Gardens', 'Wembley Stadium', 'Ben Hill Griffin Stadium', 'Gelora Bung Karno Stadium', 'Jordan-Hare Stadium', 'Jordan–Hare Stadium', 'Bukit Jalil National Stadium', 'Borg El Arab Stadium',
-      'ANZ Stadium', 'Olimpiysky National Sports Complex', 'Kyle Field', 'New Meadowlands Stadium', 'Bobby Bowden Field at Doak Campbell Stadium', 'Croke Park', 'Estádio do Maracanã', 'Gaylord Family Oklahoma Memorial Stadium', 'Twickenham Stadium', 'Arrowhead Stadium', 'Stade de France', 'Signal Iduna Park', 'Memorial Stadium', 'Notre Dame Stadium', 'Estadio Santiago Bernabéu',
-      'Camp Randall Stadium', 'Memorial Stadium', 'Williams-Brice Stadium', 'Ford Field', 'Estadio Monumental', 'Stadio Giuseppe Meazza', 'Guangdong Olympic Stadium', 'Beijing National Stadium', 'Cowboys Stadium', 'Dallas Cowboys New Stadium', 'Orange County Fairgrounds', 'Shah Alam Stadium', 'Shanghai Stadium', 'Stade des Martyrs', 'Stade Mohamed V', 'Yadegar-e-Emam Stadium', 'Giants Stadium',
-       'Luzhniki Stadium', 'EverBank Field', 'Superdome', 'Invesco Field at Mile High', 'Donald W. Reynolds Razorback Stadium', 'Old Trafford', 'Atatürk Olympic Stadium', 'Spartan Stadium', 'Cairo International Stadium', 'Sun Life Stadium', 'Millennium Stadium', 'Olympiastadion', 'Ralph Wilson Stadium', 'Sun Devil Stadium', 'Bank of America Stadium', 'Cleveland Browns Stadium', 'Lambeau Field',
-       'Stadio Olimpico', 'Husky Stadium', 'Louisiana Superdome', 'Qwest Field', 'Legion Field', 'Reliant Stadium', 'California Memorial Stadium', 'Georgia Dome', 'Athens Olympic Stadium', 'M&T Bank Stadium', 'Faurot Field', 'Kinnick Stadium', 'Qualcomm Stadium', 'Castelão', 'International Stadium Yokohama', 'Mineirão', 'Seoul Olympic Stadium', 'Allianz Arena', 'Candlestick Park', 'Munich Olympiastadion',
-       'LP Field', 'Gillette Stadium', 'Lincoln Financial Field', 'Murrayfield Stadium', 'Commonwealth Stadium', 'Morumbi', 'King Fahd International Stadium', 'Edward Jones Dome', 'Seoul World Cup Stadium', 'Olympic Stadium', 'Lane Stadium', 'Stade 5 Juillet 1962', 'Raymond James Stadium', 'Daegu World Cup Stadium', 'Estádio da Luz', 'Paul Brown Stadium', 'Citrus Bowl', 'Heinz Field', 'Alamodome', 'Centenario Stadium',
-       'Jaber Al-Ahmad International Stadium', 'June 11 Stadium', 'Rajamangala Stadium', 'San Manuel Amphitheater', 'Stade 7 November', 'Yale Bowl', 'LaVell Edwards Stadium', 'Hubert H. Humphrey Metrodome', 'Workers Stadium', 'Saitama Stadium', 'University of Phoenix Stadium', 'Estadio Olímpico Universitario', 'Oakland-Alameda County Coliseum', 'Lucas Oil Stadium', 'Scott Stadium', 'Memorial Stadium', 'Coca-Cola Park', 'Ross-Ade Stadium',
-       'Liberty Bowl Memorial Stadium', 'Yizhong Center', 'Soldier Field', 'Aleppo International Stadium', 'Celtic Park', 'Vaught-Hemingway Stadium', 'Mississippi Veterans Memorial Stadium', 'Jones AT&T Stadium', 'Emirates Stadium', 'Stadio San Paolo', 'Commonwealth Stadium', 'Commonwealth Stadium – Edmonton', 'Estádio do Arruda', 'Stade Vélodrome', 'Jawaharlal Nehru Stadium', 'Abuja Stadium', 'Benjamin Mkapa National Stadium', 'Boone Pickens Stadium',
-       'DY Patil Stadium', 'Eden Park', 'Estadio Metropolitano', 'Gaddafi Stadium', 'Golden Gate Park – Polo Field', 'Guangxi Sports Center', 'Harbin Sports City Center Stadium', 'Hefei Olympic Sports Center Stadium', 'Hohhot City Stadium', 'Jinan Olympic Sports Center Stadium', 'Kenan Memorial Stadium', 'Kobe Universiade Memorial Stadium', 'Lake Tanganyika Stadium', 'McMahon Stadium', 'Moi International Sports Centre', 'Mountaineer Field at Milan Puskar Stadium',
-        'Nanjing Olympic Sports Center', 'National Sports Stadium', 'Odi Stadium', 'Palaran Stadium', 'Raipur International Cricket Stadium', 'Stade Leopold Senghor', 'Tianhe Stadium', 'Tianjin Olympic Centre Stadium', 'UNSA Stadium', 'Wuhan Stadium', 'BC Place Stadium', 'Estadio Monumental Isidro Romero Carbo', 'Chongqing Olympic Sports Center', 'Estádio Beira-Rio', 'Stadio San Nicola', 'Izmir Atatürk Stadyumu', 'Estadio Monumental Antonio V. Liberti', 'Arizona Stadium',
-        'Olímpico Sevilla', 'Carter-Finley Stadium', 'National Olympic Stadium', 'Coca-Cola Stadium', 'Estadio Jalisco', 'Robert F. Kennedy Memorial Stadium', 'Etihad Stadium', 'Dodger Stadium', 'Papa John’s Cardinal Stadium', 'Stadium Puskás Ferenc', 'Estadi Olímpic Lluís Companys', 'Mercedes-Benz Arena', 'Dalian People’s Stadium', 'Stadion Crvena Zvezda', 'Estadio La Casa Blanca', 'Davis Wade Stadium', 'Vicente Calderón Stadium', 'ABSA Stadium', 'Amakhosi Stadium', 'Bobby Dodd Stadium',
-        'Cape Town Stadium', 'Estadio Latinoamericano', 'Helong Stadium', 'Jack Trice Stadium', 'Koshien Stadium', 'M. Chinnaswamy Stadium', 'MCA Pune International Cricket Centre', 'Plovdiv Stadium', 'Rajiv Gandhi International Cricket Stadium', 'Sardar Patel Stadium', 'Semple Stadium', 'Shenyang Olympic Sports Centre Stadium', 'Singapore National Stadium', 'Tokyo Dome', 'World Games Stadium', 'Boris Paichadze Stadium', 'Veltins-Arena', 'Estádio Serra Dourada', 'Autzen Stadium', 'Byrd Stadium',
-        'Moses Mabhida Stadium', 'Busan Asiad Stadium', 'Folsom Field', 'War Memorial Stadium', 'Estadio Ciudad de La Plata', 'Jones ATT Stadium', 'Municipal Corporation Stadium', 'Amsterdam ArenA', 'Estadio Atanasio Girardot', 'Memorial Stadium', 'Türk Telekom Arena', 'Franklin Field', 'Sükrü Saracoglu Stadium', 'Suncorp Stadium', 'Falcon Stadium', 'Estadio Mestalla', 'Rutgers Stadium', 'St James’ Park', 'Yankee Stadium', 'Bill Snyder Family Football Stadium',
-        'Manuel Ruiz de Lopera', 'Hampden Park', 'Huainan Sports Stadium', 'Estadio Deportivo Cali', 'Estadio Monumental de Maturín', 'Stade Moulay Abdellah', 'Stade Omnisports', 'Loftus Versfeld Stadium', 'Aviva Stadium', 'De Kuip', 'AAMI Stadium', 'Esprit Arena', 'Imtech Arena', 'Kumasi Sports Stadium', 'Sun Bowl Stadium', 'Estadio Juan Domingo Perón', 'Shizuoka Stadium', 'Huanglong Stadium', 'Newlands Stadium', 'Ibrox Stadium',
-        'Estádio Olímpico Monumental', 'Hrazdan Stadium', 'Jiaodaruisun Stadium', 'Independence Stadium', 'TCF Bank Stadium', 'Rogers Centre', 'Estádio do Dragão', 'Estádio José Alvalade', 'Coors Field', 'Borussia-Park', 'Incheon Munhak Stadium', 'Donbass Arena', 'Ajinomoto Stadium', 'Turner Field', 'University of Kansas Memorial Stadium', 'Tropicana Casino', 'King Baudouin Stadium', 'Al Jazira Mohammed Bin Zayed Stadium', 'Aloha Stadium', 'Charles Mopeli Stadium',
-        'Dowdy-Ficklen Stadium', 'Estádio 11 de Novembro', 'Estádio Parque do Sabiá', 'Floyd Casey Stadium', 'Gaelic Grounds', 'Guangzhou University City Stadium', 'Henan Provincial Stadium', 'Hiroshima Big Arch', 'Jiangxi Olympic Sports Center', 'Jilin People’s Stadium', 'Khalifa International Stadium', 'Kim Il-sung Stadium', 'Lagaligo Stadium', 'M. A. Chidambaram Stadium', 'Nagai Stadium', 'Naghsh-e-Jahan Stadium', 'Phnom Pehn National Olympic Stadium', 'RheinEnergieStadion', 'Rice Stadium', 'Shiraz Stadium',
-        'Stade 26 mars', 'Stade de la Revolution', 'Stanford Stadium', 'Sultan Mizan Zainal Abidin Stadium', 'Xinjiang Sports Centre', 'Yanji People’s Stadium', 'Zentralstadion', 'Ernst Happel Stadion', 'Estadio José Amalfitani', 'Sheikh Zayed Stadium', 'Parc des Princes', 'Ryan Field', 'Carrier Dome', 'Miyagi Stadium', 'Rangers Ballpark in Arlington', 'Chase Field', 'AWD-Arena', 'Estadio Alberto J. Armando', 'QE2 Stadium', 'Stadium of Light',
-        'Oriole Park at Camden Yards', 'Jinnah Sports Stadium', 'Frankenstadion', 'Fritz-Walter-Stadion', 'Estadio Tomás Adolfo Ducó', 'Safeco Field', 'Commerzbank-Arena', 'Estadio Malvinas Argentinas', 'Fukuoka Dome', 'Nelson Mandela Bay Stadium', 'Osaka Dome', 'City of Manchester Stadium', 'Camille Chamoun Sports City Stadium', 'Stadio Artemio Franchi', 'Silesian Stadium', 'Estadio Monumental David Arellano', 'Estadio Nacional de Chile', 'Sher-e-Bangla Mirpur Stadium', 'Busch Stadium', 'Deer Valley Resort',
-        'Estadio Olímpico Chateau Carreras', 'Estadio El Campín', 'ACA-VDCA Stadium', 'Peter Mokaba Stadium', 'Sydney Cricket Ground', 'Estadio Cuscatlan', 'Reser Stadium', 'Rice-Eccles Stadium', 'Estadio Olímpico Pascual Guerrero', 'Estadio Nacional', 'Estádio Ilha do Retiro', 'Estadio Omnilife', 'Estadio Ramón Sánchez Pizjuán', 'Páirc Uí Chaoimh', 'Sydney Football Stadium', 'Bright House Networks Stadium', 'Anfield', 'Estádio Mané Garrincha', 'Angel Stadium', 'Angel Stadium of Anaheim',
-
-        ];
-      $( "#auto_search" ).autocomplete({
-        source: venues_list
-      });
-    } );
-    </script>
-    <!-- This function is for artists -->
-    <script>
-    $( function() {
-      var artist_list = ['ABBA', 'AC/DC', 'The Band', 'The Beach Boys', 'The Beatles', 'The Bee Gees', 'Chuck Berry', 'David Bowie', 'Jackson Browne', 'Buzzcocks', 'The Byrds', 'The Clash', 'Eddie Cochran', 'Elvis Costello', 'Creedence Clearwater Revival', 'Crosby, Stills & Nash', 'Bo Diddley', 'The Doors', 'Bob Dylan',
-      'The Eagles', 'The Everly Brothers', 'Faces', 'Fleetwood Mac', 'The Flying Burrito Brothers', 'Genesis', 'The Grateful Dead', 'Jimi Hendrix', 'The Hollies', 'Buddy Holly', 'Hüsker Dü', 'The Jam', 'Billy Joel', 'Elton John', 'The Kinks', 'Led Zeppelin', 'Jerry Lee Lewis', 'Little Richard', 'Lynyrd Skynyrd', 'Madonna',
-       'Metallica', 'Joni Mitchell', 'The Monkees', 'Van Morrison', 'Nirvana', 'Roy Orbison', 'Gram Parsons', 'Carl Perkins', 'Tom Petty', 'Pink Floyd', 'Elvis Presley', 'Prince', 'Queen', 'The Ramones', 'R.E.M.', 'The Rolling Stones', 'Simon & Garfunkel', 'The Smiths', 'Phil Spector', 'Bruce Springsteen',
-       'Steely Dan', 'Rod Stewart', 'U2', 'The Velvet Underground', 'The Who', 'The Yardbirds', 'Neil Young', 'ABC', 'Aerosmith', 'The Allman Brothers Band', 'The Animals', 'Adam Ant', 'Anthrax', "The B-52's", 'Burt Bacharach', 'Badfinger', 'Bauhaus', 'The Beau Brummels', 'The Beautiful South', 'Jeff Beck',
-       'Beck', 'Big Brother & the Holding Company', 'Big Star', 'Björk', 'Black Flag', 'Black Sabbath', 'Blondie', 'Blood, Sweat & Tears', 'Blue Öyster Cult', 'Blur', 'Boston', 'The Box Tops', 'Billy Bragg', 'Bread', 'Brinsley Schwarz', 'Tim Buckley', 'Buffalo Springfield (Revisited)', 'Buffalo Springfield', 'Jimmy Buffett', 'Kate Bush',
-       'Butthole Surfers', 'John Cale', 'Camper Van Beethoven', 'Can', 'Captain Beefheart', 'The Carpenters', 'The Cars', 'Cheap Trick', 'Chicago', 'Eric Clapton', 'The Dave Clark Five', 'Petula Clark', 'Cocteau Twins', 'Leonard Cohen', 'Phil Collins', 'Ry Cooder', 'Alice Cooper', 'The Count Five', 'Cowboy Junkies', 'Cream', 'The Creation',
-       'Marshall Crenshaw', 'Jim Croce', 'Sheryl Crow', 'Crowded House', 'Culture Club', 'The Cure', 'Dick Dale', 'The Damned', 'Bobby Darin', 'The Spencer Davis Group', 'Dead Kennedys', 'Deep Purple', 'Def Leppard', 'John Denver', 'Depeche Mode', 'Derek & the Dominos', 'Jackie DeShannon', 'Devo', 'Dexys Midnight Runners', 'Neil Diamond',
-       'Ani DiFranco', 'Dinosaur Jr.', 'Celine Dion', 'Dion', 'Dire Straits', 'Dr. Feelgood', 'Dr. John', 'Thomas Dolby', 'Donovan', 'The Doobie Brothers', 'Nick Drake', 'Duran Duran', 'Ian Dury', 'Echo & the Bunnymen', 'Eddie & the Hot Rods', 'Duane Eddy', 'Dave Edmunds', 'Electric Light Orchestra', 'Emerson, Lake & Palmer', 'Brian Eno',
-       'Erasure', 'Eurythmics', 'The Fabulous Thunderbirds', 'Fairport Convention', 'Faith No More', 'Marianne Faithfull', 'The Fall', 'The Falling Leaves', 'The Feelies', "The Flamin' Groovies", 'Foreigner', 'The Four Seasons', 'Peter Frampton', 'Free', 'Fugazi', 'Bobby Fuller Four', 'Bobby Fuller', 'Peter Gabriel', 'Galaxie 500', 'Gang of Four',
-       'J. Geils Band', 'Geils', 'Gerry & the Pacemakers', 'Gary Glitter', "The Go-Go's", 'Grand Funk Railroad', 'The Grass Roots', 'Green Day', 'The Guess Who', 'Guided by Voices', "Guns N' Roses", 'Bill Haley', 'Hall & Oates', 'Happy Mondays', 'Tim Hardin', 'George Harrison', 'PJ Harvey', 'Heart', 'Don Henley', 'John Hiatt',
-        'Robyn Hitchcock', 'Hole', 'Hootie & the Blowfish', 'Bruce Hornsby', 'The Housemartins', 'The Human League', 'Humble Pie', 'Janis Ian', 'Indigo Girls', 'INXS', 'Iron Butterfly', 'Iron Maiden', 'Joe Jackson', 'Wanda Jackson', 'Tommy James & the Shondells', 'Jan & Dean', "Jane's Addiction", 'Jefferson Airplane', 'Jefferson Starship', 'The Jesus and Mary Chain',
-        'Jethro Tull', 'Joan Jett', 'Janis Joplin', 'Journey', 'Joy Division', 'Judas Priest', 'Dietrich Kammer', 'King Crimson', 'Carole King', 'The Kingsmen', 'Kiss', 'Kittyhawk', 'Korn', "The La's", 'Cyndi Lauper', 'The Left Banke', 'John Lennon', "Let's Active", 'Huey Lewis', 'Little Feat',
-         'Little River Band', 'Loggins & Messina', 'Los Lobos', 'Love and Rockets', 'Love', 'Lyle Lovett', "The Lovin' Spoonful", 'Nick Lowe', 'Kirsty MacColl', 'Madness', 'The Mamas & the Papas', 'Manfred Mann', 'Manic Street Preachers', 'Barry Manilow', 'Aimee Mann', 'Marilyn Manson', 'The Marshall Tucker Band', 'Dave Matthews', 'John Mayall', 'MC5',
-         'Paul McCartney', 'Michael McDonald', 'Sarah McLachlan', 'Meat Loaf', 'Meat Puppets', 'Joe Meek', 'Megadeth', 'The Mekons', 'John Mellencamp', 'Men at Work', 'Mercury Rev', 'Normann Mertig', 'George Michael', 'Midnight Oil', 'Steve Miller', 'Ministry', 'Minor Threat', 'Minutemen', 'Mission of Burma', 'Moby Grape',
-         'The Moody Blues', 'Alanis Morissette', 'Morrissey', 'Mötley Crüe', 'Motörhead', 'Mott the Hoople', 'The Move', 'Mudhoney', 'Felix Mühle', 'My Bloody Valentine', 'Rick Nelson', 'New Kids on the Block', 'New Order', 'New York Dolls', 'Randy Newman', 'Stevie Nicks', 'Harry Nilsson', 'Nine Inch Nails', 'No Doubt', 'NRBQ',
-         'Gary Numan', 'Laura Nyro', 'Oasis', "Sinéad O'Connor", 'The Offspring', 'Ozzy Osbourne', 'Robert Palmer', 'Graham Parker', 'Alan Parsons', 'Pavement', 'Pearl Jam', 'Pere Ubu', 'Pet Shop Boys', 'Liz Phair', 'Phish', 'Gene Pitney', 'Pixies', 'Poco', 'The Pogues', 'The Police',
-         'Iggy Pop', 'Portishead', 'The Pretenders', 'The Pretty Things', 'Primal Scream', 'Primus', 'John Prine', 'Procol Harum', 'The Psychedelic Furs', 'Public Image Ltd.', 'Pulp', 'Pure Prairie League', 'Radiohead', 'Rage Against the Machine', 'Bonnie Raitt', 'Rancid', 'The Rascals', 'Karsten Rasim', 'The Raspberries', 'The Red Hot Chili Peppers',
-         'Lou Reed', 'REO Speedwagon', 'The Replacements', 'Paul Revere & the Raiders', 'Cliff Richard', 'Jonathan Richman', 'The Righteous Brothers', 'Johnny Rivers', 'The Rivieras', 'Rockpile', 'Linda Ronstadt', 'Roxy Music', 'Todd Rundgren', 'Rush', 'Leon Russell', 'Mitch Ryder', 'Doug Sahm', 'Saint Etienne', 'Santana', 'Boz Scaggs'
-
-        ];
-      $( "#artist_search" ).autocomplete({
-        source: artist_list
-      });
-    } );
-    </script>
     <!-- This is for the Twitter button -->
     <script async src="https://platform.twitter.com/widgets.js"
             charset="utf-8"></script>
+    {% block jsincludes %}
+    {% endblock %}
 {% endblock %}
-
 </body>
 </html>
