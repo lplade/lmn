@@ -7,9 +7,10 @@
 <p>Venue Search</p>
 
 <!-- The form fields are built from the definition in forms.py -->
-<form action="{% url 'lmn:venue_list' %}">
-  {{ form }}
-  <input type='submit' value='Search'/>
+<form method="POST" action="{% url 'lmn:venue_list' %}">
+  {% csrf_token %}
+  <input id='auto_search' name="search_input" type='text'/>
+  <button  type='submit' value ='auto_search'>Search</button>
 </form>
 </div>
 

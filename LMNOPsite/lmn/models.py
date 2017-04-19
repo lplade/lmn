@@ -85,7 +85,7 @@ class Note(models.Model):
     text = models.TextField(max_length=1000, blank=False)
     posted_date = models.DateTimeField(blank=False)
     document = models.FileField(upload_to='images/',
-                                validators=[file_size, image_extensions] blank=True)
+                                validators=[file_size, image_extensions], blank=True)
 
     def publish(self):
         posted_date = datetime.datetime.today()
