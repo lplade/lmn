@@ -24,15 +24,16 @@ User._meta.get_field('first_name')._blank = False
 
 class Profile(models.Model):
     """User profile"""
-    # from simpleisbetterthancomplex.com
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    # from https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     description = models.CharField(max_length=200)
     favorite_bands = models.CharField(max_length=60)
     starred_user = models.BooleanField(default=False)
 
     def __str__(self):
-        return '{}, {}\n Favorite bands: {}'.format(
-            self.user, self.description, self.favorite_bands
+        return '{} ({}, {}) {}'.format(
+            self.user.username, self.user.last_name,
+            self.user.first_name, self.description
         )
 
 ##############################################################################

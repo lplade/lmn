@@ -1,3 +1,5 @@
+from django.db import transaction
+
 from .models import Venue, Artist, Note, Show, Profile
 from .forms import VenueSearchForm, NewNoteForm, ArtistSearchForm, \
     UserRegistrationForm, UserModificationForm, UserProfileForm
@@ -25,18 +27,16 @@ def user_profile(request, user_pk):
 
 
 @login_required
+@transaction.atomic
 def my_user_profile(request):
 
+    # If no Profile is associated with User, create a Profile for that User
     try:
-
-        profile = Profile.objects.get(user=request.user.id)
-
+        profile = request.user.profile
     except ObjectDoesNotExist:
-
-        profile = None
+        profile = Profile(user=request.user)
 
     if request.method == 'POST':
-
         form = UserProfileForm(request.POST)
 
         if form.is_valid():
