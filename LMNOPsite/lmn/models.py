@@ -25,7 +25,7 @@ User._meta.get_field('first_name')._blank = False
 class Profile(models.Model):
     """User profile"""
     # from simpleisbetterthancomplex.com
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     description = models.CharField(max_length=200)
     favorite_bands = models.CharField(max_length=60)
     starred_user = models.BooleanField(default=False)
@@ -34,21 +34,6 @@ class Profile(models.Model):
         return '{}, {}\n Favorite bands: {}'.format(
             self.user, self.description, self.favorite_bands
         )
-
-# Technically unrelated to models; however, these signals are crucial for the
-# concurrent creation of the Profile model whenever a Django User model is
-# created.
-
-
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
 
 ##############################################################################
 

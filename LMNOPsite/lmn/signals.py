@@ -3,7 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from lmn.api_twitter import tweet
 
-from .models import Note
+from .models import Note, Profile
 
 
 @receiver(post_save, sender=Note)
@@ -16,3 +16,14 @@ def post_to_twitter(sender, instance, created, **kwargs):
         # TODO would like to pass REST url of note as second parameter
         # Not sure how to get that
         tweet(note.title)  # TODO error handling
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
