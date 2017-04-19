@@ -2,12 +2,14 @@
 {% block content %}
 
     <h2>Artist List</h2>
-
+    <div>
     <P>Artist Search</p>
-    <form action="{% url 'lmn:artist_list' %}">
-        {{ form }}
-        <input type='submit' value='Search'>
-    </form>
+      <form method="POST" action="{% url 'lmn:artist_list' %}">
+      {% csrf_token %}
+      <input id='artist_search' name="search_artist" type='text'/>
+      <button  type='submit' value ='artist_search'>Search</button>
+      </form>
+    </div>
 
 
     {% if search_term %}
