@@ -1,42 +1,53 @@
 {% extends 'lmn/base.html' %}
+{% load static from staticfiles %}
 {% block content %}
 
-<h2>Venue List</h2>
+    <h2>Venue List</h2>
 
-<div>
-<p>Venue Search</p>
+    <div>
+        <p>Venue Search</p>
 
-<!-- The form fields are built from the definition in forms.py -->
-<form method="POST" action="{% url 'lmn:venue_list' %}">
-  {% csrf_token %}
-  <input id='auto_search' name="search_input" type='text'/>
-  <button  type='submit' value ='auto_search'>Search</button>
-</form>
-</div>
+        <!-- The form fields are built from the definition in forms.py -->
+        <form method="POST" action="{% url 'lmn:venue_list' %}">
+            {% csrf_token %}
+            <label for="auto_search">Venue Search</label>
+            <input id='auto_search' name="search_input" type='text'/>
+            <button type='submit' value='auto_search'>Search</button>
+        </form>
+    </div>
 
 
+    {% if search_term %}
+        <h2 id="venue_list_title">Venues matching '{{ search_term }}' <a
+                href="{% url 'lmn:venue_list' %}" id='clear_search'>clear</a>
+        </h2>
+    {% else %}
+        <h2 id="venue_list_title">All venues</h2>
+    {% endif %}
 
-{% if search_term %}
-  <h2 id="venue_list_title">Venues matching '{{ search_term }}'  <a href="{% url 'lmn:venue_list' %}" id='clear_search'>clear</a></h2>
-{% else %}
-  <h2 id="venue_list_title">All venues</h2>
-{% endif %}
+    <div>
 
-<div>
+        {% for venue in venues %}
 
-{% for venue in venues %}
+            <div id="venue_{{ venue.pk }}">
+                <P>
+                    <a href="{% url 'lmn:venue_detail' venue_pk=venue.pk %}">{{ venue.name }}</a>
+                    {{ venue.city }}, {{ venue.state }}</p>
+                <P>See artists, notes, and add your own <a
+                        href='{% url "lmn:artists_at_venue" venue_pk=venue.pk %}'>{{ venue.name }}
+                    notes</a>
+                </p>
+            </div>
 
-<div id="venue_{{ venue.pk }}">
-  <P><a href="{% url 'lmn:venue_detail' venue_pk=venue.pk %}">{{ venue.name }}</a>
-  {{ venue.city }}, {{ venue.state }}</p>
-  <P>See artists, notes, and add your own <a href='{% url "lmn:artists_at_venue" venue_pk=venue.pk %}'>{{ venue.name }} notes</a>
-</p>
-</div>
+        {% empty %}
+            <P>No venues found</p>
+        {% endfor %}
 
-{% empty %}
-  <P>No venues found</p>
-{% endfor %}
+    </div>
 
-</div>
-
+{% endblock %}
+{% block jsincludes %}
+    <!-- Needed for form autocomplete -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="{% static 'js/autocompleteVenue.js' %}"></script>
 {% endblock %}
