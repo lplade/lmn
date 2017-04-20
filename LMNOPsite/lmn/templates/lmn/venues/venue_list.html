@@ -26,23 +26,25 @@
     {% endif %}
 
     <div>
-
+        <table class="table">
         {% for venue in venues %}
 
-            <div id="venue_{{ venue.pk }}">
-                <P>
+            <tr id="venue_{{ venue.pk }}">
+                <td>
                     <a href="{% url 'lmn:venue_detail' venue_pk=venue.pk %}">{{ venue.name }}</a>
-                    {{ venue.city }}, {{ venue.state }}</p>
-                <P>See artists, notes, and add your own <a
-                        href='{% url "lmn:artists_at_venue" venue_pk=venue.pk %}'>{{ venue.name }}
-                    notes</a>
-                </p>
-            </div>
+                    {{ venue.city }}, {{ venue.state }}
+                </td>
+                <td>
+                    <a href='{% url "lmn:artists_at_venue" venue_pk=venue.pk %}'>See artists here</a>
+                </td>
+            </tr>
 
         {% empty %}
-            <P>No venues found</p>
+            <tr>
+                <td class="warning">No venues found</td>
+            </tr>
         {% endfor %}
-
+        </table>
     </div>
 
 {% endblock %}
