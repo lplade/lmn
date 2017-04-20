@@ -6,7 +6,13 @@
     -webkit-background-size: 100% auto;
     -o-background-size: 100% auto;
     color: #FF8A3B;
-    font-family: 'Roboto', sans-serif;;
+    font-family: 'Roboto', sans-serif;
+    /* "outline" effect" */
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
 }
 
 .decofont {
