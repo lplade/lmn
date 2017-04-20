@@ -18,15 +18,12 @@
 
             <div class="col-md-6">
                 <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>{{ note.title }}</h3>
+                    </div>
                     <div class="panel-body">
                         <div id="note_{{ note.pk }}">
-                            <h3 class="note_title">{{ note.title }}</h3>
-                            <p class="show_info"><a
-                                    href="{% url 'lmn:notes_for_show' show_pk=note.show.pk %}">{{ note.show.artist.name }}
-                                at {{ note.show.venue.name }}
-                                on {{ note.show.show_date }}</a></p>
-
-                            <p class='note_text'>{{ note.text|truncatechars:100 }}</p>
+                            <p class='note_text'>{{ note.text|truncatechars:140 }}</p>
                             {% if note.document %}
                                 <img src="{{ note.document.url }}" alt="image"
                                      class="img-responsive">
@@ -37,7 +34,10 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <p class="note_info">Posted
+                        <p class="small show-info"><a href="{% url 'lmn:notes_for_show' show_pk=note.show.pk %}">{{ note.show.artist.name }}
+                                at {{ note.show.venue.name }}
+                                on {{ note.show.show_date }}</a></p>
+                        <p class="small note_info">Posted
                                 on {{ note.posted_date }} by <a
                                         class='user'
                                         href="{% url 'lmn:user_profile' user_pk=note.user.pk %}">{{ note.user.username }}</a>

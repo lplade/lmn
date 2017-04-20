@@ -3,58 +3,44 @@
 {% block content %}
 
     <h2>Artist List</h2>
+
+    <form class="form-inline" method="POST" action="{% url 'lmn:artist_list' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="artist_search">Artist search</label>
+            <input class="form-control" id="artist_search" name="search_artist" type="text"
+                   placeholder="Type an artist here">
+        </div>
+        <button class="btn btn-default" type="submit" value="artist_search">Search</button>
+    </form>
+
     <div>
-    <P>Artist Search</p>
-      <form method="POST" action="{% url 'lmn:artist_list' %}">
-      {% csrf_token %}
-          <label for="artist_search">Artist search</label>
-          <input id='artist_search' name="search_artist" type='text'/>
-        <button  type='submit' value ='artist_search'>Search</button>
-      </form>
+        {% if search_term %}
+            <h3 id='artist_list_title'>
+                Artists matching '{{ search_term }}'
+                <a href="{% url 'lmn:artist_list' %}" id='clear_search'>(clear)</a>
+            </h3>
+        {% else %}
+            <h3 id='artist_list_title'>All artists</h3>
+        {% endif %}
+
+
+        <table class="table">
+            {% for artist in artists %}
+                <tr>
+                    <td class="artist" id="artist_{{ artist.pk }}">
+                        <a href="{% url 'lmn:artist_detail' artist_pk=artist.pk %}">{{ artist.name }}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'lmn:venues_for_artist' artist_pk=artist.pk %}">See venues & notes</a></td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td>No artists found</td>
+                </tr>
+            {% endfor %}
+        </table>
     </div>
-
-
-    {% if search_term %}
-        <h2 id='artist_list_title'>Artists matching '{{ search_term }}' <a
-                href="{% url 'lmn:artist_list' %}" id='clear_search'>(clear)</a>
-        </h2>
-    {% else %}
-        <h2 id='artist_list_title'>All artists</h2>
-    {% endif %}
-
-    <div class="row">
-
-    {% for artist in artists %}
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="artist" id="artist_{{ artist.pk }}">
-                        <P>
-                            <a href="{% url 'lmn:artist_detail' artist_pk=artist.pk %}">{{ artist.name }}</a>
-                        </p>
-
-                    </div>
-                </div>
-                <div class="panel-footer">
-                      <p>See venues played, notes, and add your own <a
-                            href="{% url 'lmn:venues_for_artist' artist_pk=artist.pk %}">{{ artist.name }}
-                             notes</a></p>
-                </div>
-            </div>
-        </div>
-
-    {% empty %}
-        <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-body panel-warning">
-                        <P>No artists found</P>
-            </div>
-        </div>
-        </div>
-
-    {% endfor %}
-</div>
-
 {% endblock %}
 {% block jsincludes %}
     <!-- Needed for form autocomplete -->
