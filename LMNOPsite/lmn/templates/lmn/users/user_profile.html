@@ -22,7 +22,7 @@ Text truncated to 200 characters. -->
             <p class="note_text">{{ note.text|truncatechars:300}}</p>
             <p class="note_posted_at">{{ note.posted_date}}</p>
             <!-- Adding ability to edit/delete notes (Jen)-->
-            <p class ="delete_note"><a href="{% url 'lmn:delete_confirm' note_pk=note.pk %}"> Delete this note!</a></p>
+            <p class="delete_note"><a class="btn btn-default btn-danger btn-sm" href="{% url 'lmn:delete_confirm' note_pk=note.pk %}">Delete this note!</a></p>
 
         </div>
     </div>

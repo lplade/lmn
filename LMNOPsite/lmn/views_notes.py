@@ -35,15 +35,17 @@ def new_note(request, show_pk):
     return render(request, 'lmn/notes/new_note.html',
                   {'form': form, 'show': show})
 
-#adding delete note
+
+# adding delete note
 @login_required
 def delete_note(request, note_pk):
     # note = get_object_or_404(Note, pk=note_pk).delete()
     # return HttpResponseRedirect(reverse('notes.views.notes'))
     note = Note.objects.get(pk=note_pk)
 
-    #return HttpResponseRedirect('lmn/notes/note_list.html')
+    # return HttpResponseRedirect('lmn/notes/note_list.html')
     return render(request, 'lmn/users/delete_note.html', {'notes': note})
+
 
 @login_required
 def delete_confirm(request, note_pk):
@@ -52,7 +54,7 @@ def delete_confirm(request, note_pk):
 
     note = Note.objects.get(pk=note_pk)
     note.delete()
-    #return HttpResponseRedirect('lmn/notes/note_list.html')
+    # return HttpResponseRedirect('lmn/notes/note_list.html')
     return render(request, 'lmn/home.html')
 
 
