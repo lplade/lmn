@@ -27,19 +27,18 @@
 
 <body>
 <div class="container"> <!-- Bootstrap main container -->
+    <!-- Navbar appears here -->
     {% include 'lmn/includes/navbar.html' %}
 
-
-
-
-    <hr>
     <!-- Wrap all app content in a grid column, and put Twitter timeline on right -->
     <div class="row">
+        <!-- Left two-thirds is app content -->
         <div class="col-md-8">
             {% block content %}
                 {# Actual page content goes here!! #}
             {% endblock %}
         </div>
+        <!-- Rightmost third is Twitter stream. Collapses on small screens -->
         <div class="col-md-4">
             {% include 'lmn/includes/twitter_timeline.html' %}
         </div>
@@ -51,11 +50,12 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- Include all compiled Bootstrap plugins -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <!-- This is for the Twitter button -->
+    <!-- This is needed for the Twitter button -->
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     {% block jsincludes %}
+        {# Here is where any page-specific Javascript should be included #}
     {% endblock %}
 {% endblock %}
 </body>
