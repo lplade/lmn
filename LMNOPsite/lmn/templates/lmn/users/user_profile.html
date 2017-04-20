@@ -21,6 +21,9 @@ Text truncated to 200 characters. -->
             <P class="note_info">{{ note.show.artist.name }} at {{ note.show.venue.name }} on {{ note.show.show_date }}</P>
             <p class="note_text">{{ note.text|truncatechars:300}}</p>
             <p class="note_posted_at">{{ note.posted_date}}</p>
+            <!-- Adding ability to edit/delete notes (Jen)-->
+            <p class ="delete_note"><a href="{% url 'lmn:delete_confirm' note_pk=note.pk %}"> Delete this note!</a></p>
+
         </div>
     </div>
     {% empty %}

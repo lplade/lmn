@@ -67,6 +67,18 @@ urlpatterns = [
         views_notes.search_notes,
         name='search_notes'
     ),
+    url(
+        r'^user/delete_note/(?P<note_pk>\d+)/$',
+        views_notes.delete_note,
+        name="delete_note"
+    ),
+        url(
+            r'^user/delete_confirm/(?P<note_pk>\d+)/$',
+            views_notes.delete_confirm,
+            name="delete_confirm"
+        ),
+
+
 
     # ARTIST RELATED --------------------------------------------------------
     url(

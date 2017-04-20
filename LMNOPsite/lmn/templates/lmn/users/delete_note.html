@@ -1,0 +1,12 @@
+{% extends 'lmn/base.html' %}
+
+{% block content %}
+<div> Hey, are you sure you want to delete {{ object.title }}? </div>
+  <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+    {{ form.as_p }}
+    <P>
+    <input type='submit' class='btn' value='Delete Note' name='delete_confirm'>
+
+    </input>
+  </form>
+{% endblock %}
