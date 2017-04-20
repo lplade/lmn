@@ -52,21 +52,16 @@
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     {% if user.is_authenticated %}
-                        <span id="welcome_user_msg" class="text-info">
-                            Logged in as
-                            <a href="{% url 'lmn:user_profile' user_pk=user.pk %}" class="navbar-link">
-                                {{ user.username }}
-                            </a>.
-                            <a href="{% url 'logout' %}?next={% url 'lmn:logout_message' %}" class="navbar-link">
-                                Log out
-                            </a>
-                        </span>
+                        <p class="navbar-text">Logged in as
+                            <a href="{% url 'lmn:user_profile' user_pk=user.pk %}">{{ user.username }}</a>.
+                            <a href="{% url 'logout' %}?next={% url 'lmn:logout_message' %}">Log out</a>
+                        </p>
                     {% else %}
-                        <span id="login_or_sign_up">
+                        <p class="navbar-text">
                             <a href="{% url 'login' %}?next={{ request.path }}" class="navbar-link">
                                 Log in or sign up
                             </a>
-                        </span>
+                        </p>
                     {% endif %}
                 </li>
             </ul>
