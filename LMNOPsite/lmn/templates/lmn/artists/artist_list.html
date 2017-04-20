@@ -1,31 +1,49 @@
 {% extends 'lmn/base.html' %}
+{% load static from staticfiles %}
 {% block content %}
 
-<h2>Artist List</h2>
+    <h2>Artist List</h2>
 
-<P>Artist Search</p>
-  <form action="{% url 'lmn:artist_list' %}">
-    {{ form }}
-    <input type='submit' value='Search'>
-  </form>
+    <form class="form-inline" method="POST" action="{% url 'lmn:artist_list' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="artist_search">Artist search</label>
+            <input class="form-control" id="artist_search" name="search_artist" type="text"
+                   placeholder="Type an artist here">
+        </div>
+        <button class="btn btn-default" type="submit" value="artist_search">Search</button>
+    </form>
+
+    <div>
+        {% if search_term %}
+            <h3 id='artist_list_title'>
+                Artists matching '{{ search_term }}'
+                <a href="{% url 'lmn:artist_list' %}" id='clear_search'>(clear)</a>
+            </h3>
+        {% else %}
+            <h3 id='artist_list_title'>All artists</h3>
+        {% endif %}
 
 
-{% if search_term %}
-  <h2 id='artist_list_title'>Artists matching '{{ search_term }}' <a href="{% url 'lmn:artist_list' %}" id='clear_search'>(clear)</a></h2>
-{% else %}
-  <h2 id='artist_list_title'>All artists</h2>
-{% endif %}
-
-
-{% for artist in artists %}
-
-<div class="artist" id="artist_{{ artist.pk }}">
-<P><a href="{% url 'lmn:artist_detail' artist_pk=artist.pk %}">{{ artist.name }}</a></p>
-  <p>See venues played, notes, and add your own <a href="{% url 'lmn:venues_for_artist' artist_pk=artist.pk %}">{{ artist.name }} notes</a>
-<div>
-
-{% empty %}
-<P>No artists found</P>
-{% endfor %}
-
+        <table class="table">
+            {% for artist in artists %}
+                <tr>
+                    <td class="artist" id="artist_{{ artist.pk }}">
+                        <a href="{% url 'lmn:artist_detail' artist_pk=artist.pk %}">{{ artist.name }}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'lmn:venues_for_artist' artist_pk=artist.pk %}">See venues & notes</a></td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td>No artists found</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
+{% block jsincludes %}
+    <!-- Needed for form autocomplete -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="{% static 'js/autocompleteArtist.js' %}"></script>
 {% endblock %}

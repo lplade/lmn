@@ -2,15 +2,17 @@
 
 {% block content %}
 
-  <h2>Log in</h2>
+    <h2>Log in</h2>
 
-  <form method='POST' action="">{% csrf_token %}
-  <table id='login_form'>
-    {{ form.as_table }}
-  </table>
-    <button type="submit">Login</button>
-  </form>
+    <form method="POST" action="">{% csrf_token %}
 
-<P><a href="{% url 'register' %}">Or create an account</a></p>
+        <table id="login_form" class="table">
+            {{ form.as_table }}
+        </table>
+        <button type="submit" class="btn btn-default">Login</button>
+
+    </form>
+
+    <p>Or <a href="{% url 'register' %}">create an account</a></p>
 
 {% endblock %}

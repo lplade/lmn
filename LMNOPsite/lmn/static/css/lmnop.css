@@ -1,0 +1,44 @@
+
+.jumbotron {
+    background: #000 url("../img/yeasayer_20120824_003.jpg") no-repeat center center;
+    background-size: 100% auto;
+    -moz-background-size: 100% auto;
+    -webkit-background-size: 100% auto;
+    -o-background-size: 100% auto;
+    color: #FF8A3B;
+    font-family: 'Roboto', sans-serif;
+    /* "outline" effect" */
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+}
+
+.decofont {
+    font-family: 'Monoton', cursive;
+}
+
+
+
+/*body {
+  font-family: monospace;
+}*/
+
+/* The following don't really fit with style anymore,
+   try to remove those ids and Bootstrapify them
+ */
+#welcome_user_msg, #login_or_sign_up {
+    position: absolute;
+    right: 0;
+    padding-right: 10px;
+}
+
+#login_form.tr, #registration_form.tr {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+#login_form.th, #registration_form.th {
+    text-align: right;
+}

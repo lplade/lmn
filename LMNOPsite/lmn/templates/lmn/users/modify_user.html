@@ -1,0 +1,25 @@
+{% extends 'lmn/base.html' %} {% block content %}
+<div name="container">
+    <div name="row">
+        <div name="col-lg-12">
+            <h2>Your Account</h2>
+            <hr> {% if profile %}
+            <div name="col-sm-8">
+                <h3>Description</h3>
+                <p>{{ profile.description }}</p>
+                <h3>Favorite Bands</h3>
+                <p>{{ profile.favorite_bands }}</p>
+                <hr> {% endif %}
+            </div>
+            <div name="col-sm-4">
+                <form method='post' action="">{% csrf_token %}
+                    <table id="modification_form">
+                        {{ form.as_table }}
+                    </table>
+                    <button type='submit'>Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

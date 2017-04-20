@@ -1,5 +1,5 @@
 from django import forms
-from .models import Note
+from .models import Note, Profile
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -15,17 +15,27 @@ class ArtistSearchForm(forms.Form):
 
 
 class NewNoteForm(forms.ModelForm):
+
     class Meta:
         model = Note
-        fields = ('title', 'text')
+        fields = ('title', 'text', 'document')
+
+
+class SearchNoteForm(forms.ModelForm):
+    # TODO change form to use forms.Form
+    # class SearchNoteForm(forms.Form):
+    # search_name = forms.CharField(label="Search Notes", max_length=255)
+    class Meta:
+        model = Note
+        fields = ('text', )
 
 
 class UserRegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
-
+        fields = ('username', 'first_name', 'last_name',
+                  'email', 'password1', 'password2')
 
     def clean_username(self):
 
@@ -34,11 +44,10 @@ class UserRegistrationForm(UserCreationForm):
         if not username:
             raise ValidationError('Please enter a username')
 
-        if User.objects.filter(username__iexact=username).exists():
+        if User.objects.filter(username__icontains=username).exists():
             raise ValidationError('A user with that username already exists')
 
         return username
-
 
     def clean_first_name(self):
         first_name = self.cleaned_data['first_name']
@@ -47,7 +56,6 @@ class UserRegistrationForm(UserCreationForm):
 
         return first_name
 
-
     def clean_last_name(self):
         last_name = self.cleaned_data['last_name']
         if not last_name:
@@ -55,17 +63,16 @@ class UserRegistrationForm(UserCreationForm):
 
         return last_name
 
-
     def clean_email(self):
         email = self.cleaned_data['email']
         if not email:
             raise ValidationError('Please enter an email address')
 
         if User.objects.filter(email__iexact=email).exists():
-            raise ValidationError('A user with that email address already exists')
+            raise ValidationError(
+                'A user with that email address already exists')
 
         return email
-
 
     def save(self, commit=True):
         user = super(UserRegistrationForm, self).save(commit=False)
@@ -78,3 +85,36 @@ class UserRegistrationForm(UserCreationForm):
             user.save()
 
         return user
+
+
+class UserModificationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email')
+
+    def clean_first_name(self):
+        first_name = self.cleaned_data['first_name']
+        if not first_name:
+            raise ValidationError('Please enter your first name')
+
+        return first_name
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data['last_name']
+        if not last_name:
+            raise ValidationError('Please enter your last name')
+
+        return last_name
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if not email:
+            raise ValidationError('Please enter an email address')
+
+        return email
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['description', 'favorite_bands']

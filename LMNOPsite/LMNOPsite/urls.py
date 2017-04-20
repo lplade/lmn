@@ -18,16 +18,21 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
+from django.conf import settings
+from django.conf.urls.static import static
 from lmn import views, views_users
+from django.views.defaults import page_not_found
 
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),    #Admin site
-
+    url(r'^admin/', admin.site.urls),  # Admin site
     url(r'^accounts/login/$', auth_views.login, name='login'),
     url(r'^accounts/logout/$', auth_views.logout, name='logout'),
     url(r'^register/$', views_users.register, name='register'),
-
-    url(r'^', include('lmn.urls') ),
-
+    
+    url(r'^', include('lmn.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

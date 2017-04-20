@@ -1,10 +1,25 @@
 {% extends 'lmn/base.html' %}
 {% block content %}
 
+    <div class="row">
+        <div class="col-md-6">
+            <h2 id="note_page_title">
+                {{ note.show.artist.name }} at {{ note.show.venue.name }} by <a href="{% url 'lmn:user_profile' user_pk=note.user.pk %}">{{ user.username }}</a>
+            </h2>
 
-<h2 id="note_page_title">{{ note.show.artist.name }} at {{ note.show.venue.name }} by <a href="{% url 'lmn:user_profile' user_pk=note.user.pk %}">{{ user.username }}</a></h2>
+            <p id="note_title">
+                <b>{{ note.title}}</b>
+            </p>
+            <p id="note_text">
+                {{ note.text }}
+            </p>
 
-<p id="note_title"><b>{{ note.title}}</b></p>
-<p id="note_text">{{ note.text }}</b>
+            {% if note.document %}
+                <img src="{{ note.document.url }}" alt="image" class="img-responsive">
+            {% else %}
+                <p>No photo uploaded</p>
+            {% endif %}
+        </div>
+    </div>
 
 {% endblock %}

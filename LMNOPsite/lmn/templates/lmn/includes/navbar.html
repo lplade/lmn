@@ -1,0 +1,71 @@
+<!-- Main navbar -->
+{# Requires Bootstrap & its plugins, jQuery #}
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">LMNOP</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                {% comment %}
+                This is a little wooly. We dynamically check if the current URL matches a given navbar button.
+                If it does, add some tags so Bootstrap marks it as the active navbar.
+                {% endcomment %}
+                {# Set full URLs as vars for comparison logic #}
+                {% url 'lmn:venue_list' as venue_list %}
+                {% url 'lmn:artist_list' as artist_list %}
+                {% url 'lmn:latest_notes' as latest_notes %}
+
+                <li {% ifequal request.get_full_path venue_list %}class="active"{% endifequal %}>
+                    <a href="{% url 'lmn:venue_list' %}">Venues
+                        {% ifequal request.get_full_path venue_list %}
+                            <span class="sr-only">(current)</span>
+                        {% endifequal %}
+                    </a>
+                </li>
+                <li {% ifequal request.get_full_path artist_list %}class="active"{% endifequal %}>
+                    <a href="{% url 'lmn:artist_list' %}">Artists
+                        {% ifequal request.get_full_path 'lmn:artist_list' %}
+                            <span class="sr-only">(current)</span>
+                        {% endifequal %}
+                    </a>
+                </li>
+                <li {% ifequal request.get_full_path latest_notes %}class="active"{% endifequal %}>
+                    <a href="{% url 'lmn:latest_notes' %}">Notes
+                        {% ifequal request.get_full_path latest_notes %}
+                            <span class="sr-only">(current)</span>
+                        {% endifequal %}
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    {% if user.is_authenticated %}
+                        <p class="navbar-text">Logged in as
+                            <a href="{% url 'lmn:user_profile' user_pk=user.pk %}">{{ user.username }}</a>.
+                            <a href="{% url 'logout' %}?next={% url 'lmn:logout_message' %}">Log out</a>
+                        </p>
+                    {% else %}
+                        <p class="navbar-text">
+                            <a href="{% url 'login' %}?next={{ request.path }}" class="navbar-link">
+                                Log in or sign up
+                            </a>
+                        </p>
+                    {% endif %}
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+

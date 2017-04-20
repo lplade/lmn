@@ -1,0 +1,6 @@
+# This keeps GitHub from giving us credit for 3rd-party code libraries
+LMNOPsite/lmn/static/css/bootstrap* linguist-vendored
+LMNOPsite/lmn/static/js/bootstrap* linguist-vendored
+LMNOPsite/lmn/static/js/npm.js linguist-vendored
+LMNOPsite/lmn/static/fonts/glyphicons* linguist-vendored
+LMNOPsite/lmn/static/locales/bootstrap* linguist-vendored
